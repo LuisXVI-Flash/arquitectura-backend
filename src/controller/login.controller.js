@@ -16,7 +16,7 @@ module.exports = {
             }
 
             const encryptedPassword = crypto.encryptedPassword(password)
-            const query = "select * from trabajadores where usuario = ? and contraseña = ?"
+            const query = "select * from trabajadores where usuario = ? and contraseña = ? and estado = 1"
 
             database.query(query, [username, encryptedPassword], (error, result) => {
                 try {
@@ -29,7 +29,7 @@ module.exports = {
                     if (!result.length) {
                         return response.json({
                             status: 400,
-                            message: 'No existe el usuario'
+                            message: 'No existe el usuario o esta deshabilitado'
                         })
                     }
 
