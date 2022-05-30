@@ -17,6 +17,7 @@ require('./src/route/login.route')(app)
 require('./src/route/user.route')(app)
 require('./src/route/client.route')(app)
 require('./src/route/product.route')(app)
+require('./src/route/solicitud.route')(app)
 
 server.listen(port, '0.0.0.0', () => {
     console.log(`Servidor corriendo en puerto ${port}`)
