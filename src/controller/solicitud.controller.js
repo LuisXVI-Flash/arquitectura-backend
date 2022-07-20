@@ -105,5 +105,48 @@ module.exports = {
                 console.log(`Hubo un error en la base de datos: ${ error.message }`)
             }
         })
-    }
+    },
+    add: (request, response) => {
+        let params = request.body
+        let {nombres, apellidos, correo, dni, celular, idproducto} = params
+        
+        const query = "INSERT into CLIENTES(nombres, apellidos, correo, dni, celular) values(?,?,?,?,?);" + 
+                      "SELECT idcliente from CLIENTES WHERE dni=?;"
+
+        database.query(query,[nombres,apellidos,correo,dni,celular,dni], (error, result, fields) => {
+            try {
+                if (error) {
+                    return response.json({
+                        status: 400,
+                        message: 'No se pudo insertar al cliente ',
+                        result: error
+                    })
+                }
+
+                let idCliente = JSON.parse(JSON.stringify(result[1]))
+
+                const insertQuery = "INSERT into SOLICITUD(idproducto, idcliente) values(?,?)"
+
+                database.query(insertQuery, [idproducto, idCliente[0].idcliente], (error, result) => {
+                    if (error) {
+                        return response.json({
+                            status: 400,
+                            message: 'No se pudo insertar la solicitud ',
+                            result: error
+                        })
+                    }
+
+                    return response.json({
+                        status: 200,
+                        result: result,
+                        message: 'Solicitud creada exitosamente'
+                    })
+    
+                })
+            } catch (error) {
+                console.log(`Hubo un error en la base de datos: ${ error.message }`)
+            }
+        })
+
+    }    
 }
