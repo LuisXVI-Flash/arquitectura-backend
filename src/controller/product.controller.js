@@ -102,5 +102,37 @@ module.exports = {
                 console.log(`Hubo un error en la base de datos: ${ error.message }`)
             }
         }) 
+    },
+    find: (request, response) => {
+        let params = request.body
+        let {id, pac} = params
+
+        const query = "SELECT idproducto FROM producto WHERE id=? and pac=?"
+
+        database.query(query, [id, pac], (error, result) => {
+            try {
+                if (error) {
+                    return response.json({
+                        status: 400,
+                        message: 'El producto no pudo ser listado.',
+                        result: error
+                    })
+                }
+
+                if (!result.length) {
+                    return response.json({
+                        status: 400,
+                        message: 'No existe el producto con los datos indicados.'
+                    })
+                }
+                return response.json({
+                    status: 200,
+                    result: result,
+                    message: 'Producto encontrado exitosamente.'
+                })
+            } catch (error) {
+                console.log(`Hubo un error en la base de datos: ${ error.message }`)
+            }
+        })
     }
 }
