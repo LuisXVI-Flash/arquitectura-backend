@@ -1,4 +1,16 @@
 const {database} = require('../database/connection')
+const email = require('nodemailer')
+
+let send_correo = email.createTransport({
+    "host":"smtp.gmail.com",
+    "port":"465",
+    "secure":"true",
+    "auth":{
+        "type":"login",
+        "user":"soporte.prueba.node@gmail.com",
+        "pass":"#2017untels$"
+    }
+})
 
 module.exports = {
     all: (request, response) => {
@@ -96,6 +108,23 @@ module.exports = {
                     })
                 }
                 
+                let email = JSON.parse(JSON.stringify(result[2]))
+
+                let email_content = {
+                    from:"soporte.prueba.node@gmail.com",
+                    to:email[0].correo,
+                    subject:"PRODUCTO ACTIVADO!!! Gracias por elegir TECA",
+                    html:`
+                        <div> 
+                        <p>Hola amigo</p> 
+                        <p>Te informamos que tu dispositivo ha sido activado</p> 
+
+                        </div> 
+                    `
+                }
+
+                send_correo.sendMail(email_content)
+
                 return response.json({
                     status: 200,
                     result: result,
