@@ -8,7 +8,7 @@ let send_correo = email.createTransport({
     "auth":{
         "type":"login",
         "user":"soporte.prueba.node@gmail.com",
-        "pass":"#2017untels$"
+        "pass":"apnrddhzsvpmqdhf"
     }
 })
 
