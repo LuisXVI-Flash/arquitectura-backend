@@ -154,7 +154,7 @@ module.exports = {
 
                 let idCliente = JSON.parse(JSON.stringify(result[1]))
 
-                const insertQuery = "INSERT into solicitud(idproducto, idcliente) values(?,?)"
+                const insertQuery = "INSERT into solicitud(idproducto, idcliente, estado) values(?,?,0)"
 
                 database.query(insertQuery, [idproducto, idCliente[0].idcliente], (error, result) => {
                     if (error) {
