@@ -139,8 +139,8 @@ module.exports = {
         let params = request.body
         let {nombres, apellidos, correo, dni, celular, idproducto} = params
         
-        const query = "INSERT into CLIENTES(nombres, apellidos, correo, dni, celular) values(?,?,?,?,?);" + 
-                      "SELECT idcliente from CLIENTES WHERE dni=?;"
+        const query = "INSERT into clientes(nombres, apellidos, correo, dni, celular) values(?,?,?,?,?);" + 
+                      "SELECT idcliente from clientes WHERE dni=?;"
 
         database.query(query,[nombres,apellidos,correo,dni,celular,dni], (error, result, fields) => {
             try {
@@ -154,7 +154,7 @@ module.exports = {
 
                 let idCliente = JSON.parse(JSON.stringify(result[1]))
 
-                const insertQuery = "INSERT into SOLICITUD(idproducto, idcliente) values(?,?)"
+                const insertQuery = "INSERT into solicitud(idproducto, idcliente) values(?,?)"
 
                 database.query(insertQuery, [idproducto, idCliente[0].idcliente], (error, result) => {
                     if (error) {
