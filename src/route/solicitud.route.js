@@ -6,5 +6,5 @@ module.exports = app => {
     app.get('/solicitud/attended', [auth.verifyToken], solicitud.attended)
     app.get('/solicitud/unnatended', [auth.verifyToken], solicitud.unattended)
     app.post('/solicitud/activate', [auth.verifyToken], solicitud.activate)
-    app.post('/solicitud/create', [auth.verifyToken], solicitud.add)
+    app.post('/solicitud/create', /*[auth.verifyToken],*/ solicitud.add)
 }
